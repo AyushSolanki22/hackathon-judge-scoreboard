@@ -1,0 +1,13 @@
+import express from 'express';
+import cors from 'cors';
+import scoreRoutes from './routes/scoreRoutes.js';
+import teamRoutes from './routes/teamRoutes.js';
+import judgeRoutes from './routes/judgeRoutes.js';
+const app = express();
+app.use(cors({ origin: process.env.CLIENT_URL ? process.env.CLIENT_URL.split(',') : true }));
+app.use(express.json());
+app.get('/api/health', (_req,res)=>res.json({ok:true,service:'HackScore API'}));
+app.use('/api/teams', teamRoutes);
+app.use('/api/judges', judgeRoutes);
+app.use('/api/scores', scoreRoutes);
+export default app;
